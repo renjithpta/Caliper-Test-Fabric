@@ -1,0 +1,16 @@
+go to 
+
+    caliper > src
+
+and run npm install
+
+
+
+
+
+
+# Start The Network
+./manageNetwork.sh <mir/raft> <up/down>
+
+# Test The Network
+./testNetwork.sh <mir/raft>
