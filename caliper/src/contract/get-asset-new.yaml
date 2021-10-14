@@ -1,0 +1,212 @@
+test:
+  name: get-asset
+  description: >-
+    This is a duration based benchmark targeting a Hyperledger Fabric network
+    using the `basic` NodeJS chaincode
+    contract that is interacted with via a Fabric-SDK-Node Gateway. Each test
+    round invokes the 'getAsset()' API method. Successive rounds create and
+    retrieve assets of larger byteSize.
+  workers:
+    type: local
+    number: 10
+  rounds:
+    - label: get-asset-evaluate-100
+      description: >-
+        Test an evaluateTransaction() Gateway method against the NodeJS
+        `basic` Smart Contract method named `getAsset`. This method
+        performs a getState on an item that matches an asset of size 100 bytes.
+      contractId: basic
+      txDuration: 5
+      rateControl:
+        type: fixed-load
+        opts:
+          transactionLoad: 50
+      workload:
+        module: lib/get-asset.js
+        arguments:
+          contractId: basic
+          create_sizes:
+            - 100
+            - 1000
+            - 2000
+            - 4000
+            - 8000
+            - 16000
+            - 32000
+            - 64000
+          assets: 5
+          byteSize: 100
+          noSetup: true
+          consensus: false
+    - label: get-asset-evaluate-1000
+      description: >-
+        Test an evaluateTransaction() Gateway method against the NodeJS
+        `basic` Smart Contract method named `getAsset`. This method
+        performs a getState on an item that matches an asset of size 1000 bytes.
+      contractId: basic
+      txDuration: 20
+      rateControl:
+        type: fixed-load
+        opts:
+          transactionLoad: 30
+      workload:
+        module: lib/get-asset.js
+        arguments:
+          contractId: basic
+          noSetup: true
+          assets: 10
+          byteSize: 1000
+          consensus: false
+    - label: get-asset-evaluate-2000
+      description: >-
+        Test an evaluateTransaction() Gateway method against the NodeJS
+        `basic` Smart Contract method named `getAsset`. This method
+        performs a getState on an item that matches an asset of size 2000 bytes.
+      contractId: basic
+      txDuration: 40
+      rateControl:
+        type: fixed-load
+        opts:
+          transactionLoad: 50
+      workload:
+        module: lib/get-asset.js
+        arguments:
+          contractId: basic
+          noSetup: true
+          byteSize: 2000
+          assets: 10
+          consensus: false
+    - label: get-asset-evaluate-4000
+      description: >-
+        Test an evaluateTransaction() Gateway method against the NodeJS
+        `basic` Smart Contract method named `getAsset`. This method
+        performs a getState on an item that matches an asset of size 4000 bytes.
+      contractId: basic
+      txDuration: 20
+      rateControl:
+        type: fixed-load
+        opts:
+          transactionLoad: 40
+      workload:
+        module: lib/get-asset.js
+        arguments:
+          contractId: basic
+          noSetup: true
+          byteSize: 4000
+          assets: 5
+          consensus: false
+    - label: get-asset-evaluate-8000
+      description: >-
+        Test an evaluateTransaction() Gateway method against the NodeJS
+        `basic` Smart Contract method named `getAsset`. This method
+        performs a getState on an item that matches an asset of size 8000 bytes.
+      contractId: basic
+      txDuration: 30
+      rateControl:
+        type: fixed-load
+        opts:
+          transactionLoad: 50
+      workload:
+        module: lib/get-asset.js
+        arguments:
+          contractId: basic
+          noSetup: true
+          byteSize: 8000
+          assets: 10
+          consensus: false
+    - label: get-asset-evaluate-16000
+      description: >-
+        Test an evaluateTransaction() Gateway method against the NodeJS
+        `basic` Smart Contract method named `getAsset`. This method
+        performs a getState on an item that matches an asset of size 16000
+        bytes.
+      contractId: basic
+      txDuration: 30
+      rateControl:
+        type: fixed-load
+        opts:
+          transactionLoad: 50
+      workload:
+        module: lib/get-asset.js
+        arguments:
+          contractId: basic
+          noSetup: true
+          byteSize: 16000
+          assets: 10
+          consensus: false
+    - label: get-asset-evaluate-32000
+      description: >-
+        Test an evaluateTransaction() Gateway method against the NodeJS
+        `basic` Smart Contract method named `getAsset`. This method
+        performs a getState on an item that matches an asset of size 32000
+        bytes.
+      contractId: basic
+      txDuration: 30
+      rateControl:
+        type: fixed-load
+        opts:
+          transactionLoad: 50
+      workload:
+        module: lib/get-asset.js
+        arguments:
+          contractId: basic
+          noSetup: true
+          byteSize: 32000
+          assets: 10
+          consensus: false
+    - label: get-asset-evaluate-64000
+      description: >-
+        Test an evaluateTransaction() Gateway method against the NodeJS
+        `basic` Smart Contract method named `getAsset`. This method
+        performs a getState on an item that matches an asset of size 64000
+        bytes.
+      contractId: basic
+      txDuration: 30
+      rateControl:
+        type: fixed-load
+        opts:
+          transactionLoad: 20
+      workload:
+        module: lib/get-asset.js
+        arguments:
+          contractId: basic
+          noSetup: true
+          byteSize: 64000
+          assets: 10
+          consensus: false
+    - label: get-asset-evaluate-8000-fixed-tps
+      description: >-
+        Test an evaluateTransaction() Gateway method against the NodeJS
+        `basic` Smart Contract method named `getAsset`. This method
+        performs a getState on an item that matches an asset of size 8000 bytes
+        at a fixed TPS.
+      contractId: basic
+      txDuration: 30
+      rateControl:
+        type: fixed-rate
+        opts:
+          tps: 35
+      workload:
+        module: lib/get-asset.js
+        arguments:
+          contractId: basic
+          noSetup: true
+          byteSize: 8000
+          assets: 10
+          consensus: false
+
+monitors:
+    resource:
+    - module: docker
+      options:
+        interval: 4
+        containers: [all]
+      charting:
+        bar:
+          metrics: [Memory(avg),CPU%(avg)]
+        polar:
+          metrics: [all]
+          
+observer:
+  type: local
+  interval: 5

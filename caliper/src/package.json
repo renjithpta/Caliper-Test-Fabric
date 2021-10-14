@@ -1,0 +1,22 @@
+{
+  "name": "fabric",
+  "version": "1.0.0",
+  "description": "This folder contains tests that target Fabric shim API methods that may be called within chaincode",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "dependencies": {
+    "@hyperledger/caliper-cli": "^0.4.2",
+    "fabric-ca-client": "^2.2.3",
+    "fabric-common": "^2.1.0",
+    "fabric-network": "^2.2.3",
+    "fabric-protos": "^2.1.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
